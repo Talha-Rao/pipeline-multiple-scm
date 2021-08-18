@@ -1,31 +1,29 @@
 pipeline {
     agent any
-
     stages {
-        stage ('Compile Stage') {
+        stage('Node') {
+            agent {
+                docker {
+                    image 'node:14-alpine'
 
-            steps {
-              
-                    sh "mvn clean compile"
-            
-            }
-        }
-
-        stage ('Testing Stage') {
-
-            steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn test'
                 }
             }
-        }
-
-
-        stage ('Deployment Stage') {
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn deploy'
+                sh 'echo "Talha Rao"'
+                sh 'node --version'
+                
+            }
+        }
+        stage('Maven') {
+            agent {
+                docker {
+                    image 'maven:3.8.1-adoptopenjdk-11'
                 }
+            }
+            steps {
+                sh 'echo "Talha Rao"'
+                sh 'mvn --version'
+                
             }
         }
     }
